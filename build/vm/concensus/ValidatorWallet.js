@@ -11,18 +11,32 @@ class SolarValidatorWallet extends Wallet_1.SolarWallet {
         this.stakes = [];
     }
     addStake(stakevalidator, amount) {
-        stakevalidator.stake.push();
+        stakevalidator.addStake({ "address": this.keypair.getPublic('hex'), "age": Date.now(), "hydrogen": amount });
         this.stakes.push({ "address": this.keypair.getPublic('hex'), "age": Date.now(), "hydrogen": amount });
+    }
+    getBalance(blockchain) {
+        var blockbalance = super.getBalance(blockchain);
+        var amountstaked = 0;
+        for (var i = 0; i < blockchain.chainLength; i++) {
+            for (var j = 0; j < blockchain.chain[i].stake.length; j++) {
+                if (blockchain.chain[i].stake[j].address == this.getPublicKey) {
+                    amountstaked += blockchain.chain[i].stake[j].hydrogen;
+                }
+            }
+        }
+        return blockbalance - amountstaked;
     }
     ProposeBlock(client, blockchain) {
         var transaction = new Transaction_1.SolarTransaction("system", this.getPublicKey, 100, { "note": "validator reward", "publicAddresses": true });
-        var block = new Block_1.SolarBlock(blockchain.getLatestBlock().hash, Date.now(), client.pool.transactions, this, blockchain.validator.stake);
+        var verified = Blockchain_1.SolarBlockchain.verifyTransactions(client.pool.transactions);
+        verified.push(transaction);
+        var block = new Block_1.SolarBlock(blockchain.getLatestBlock().hash, Date.now(), verified, this, blockchain.validator.stake);
         if (Blockchain_1.SolarBlockchain.verifyBlock(block)) {
-            //Broadcast block function
             return block;
         }
         else {
             console.log("The block is not verified");
+            return undefined;
         }
     }
     signHash(hash) {

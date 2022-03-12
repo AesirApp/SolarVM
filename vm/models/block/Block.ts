@@ -26,7 +26,7 @@ export class SolarBlock{
     }
 
     public CreateHash():string{
-        return SHA256(JSON.stringify(`${this.timestamp}${this.prevHash}${this.transactions}${this.stake}${this.blocksignature}`)).toString();
+        return SHA256(JSON.stringify(`${this.timestamp}${this.prevHash}${this.transactions}${this.stake}`)).toString();
     }
 
     public signBlockHash(hash:string,validatorWallet:SolarValidatorWallet){

@@ -44,9 +44,15 @@ export class SolarBlockchain{
     }
 
     public static verifyTransactions(transactions:SolarTransaction[]){
+        var verifiedTransactions:SolarTransaction[] = [];
         for(var i = 0; i < transactions.length; i++){
+            if(transactions[i].verifyTransaction()){
+                verifiedTransactions.push(transactions[i]);
+            }
             
         }
+
+        return verifiedTransactions;
     }
 
     public isChainValid(){
@@ -58,7 +64,6 @@ export class SolarBlockchain{
     }
     //verify that the block was created by the correct validator
     public static verifyBlock(block:SolarBlock):boolean{
-        console.log(block)
        return verifySignature(block.validator,block.blocksignature,block.hash)
     }
 

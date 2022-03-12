@@ -36,8 +36,13 @@ class SolarBlockchain {
         }
     }
     static verifyTransactions(transactions) {
+        var verifiedTransactions = [];
         for (var i = 0; i < transactions.length; i++) {
+            if (transactions[i].verifyTransaction()) {
+                verifiedTransactions.push(transactions[i]);
+            }
         }
+        return verifiedTransactions;
     }
     isChainValid() {
     }
@@ -46,7 +51,6 @@ class SolarBlockchain {
     }
     //verify that the block was created by the correct validator
     static verifyBlock(block) {
-        console.log(block);
         return (0, ChainUtil_1.verifySignature)(block.validator, block.blocksignature, block.hash);
     }
     static GenesisBlock() {

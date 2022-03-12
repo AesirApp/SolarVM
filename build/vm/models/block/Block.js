@@ -13,7 +13,7 @@ class SolarBlock {
         this.transactions = transactions;
     }
     CreateHash() {
-        return (0, crypto_js_1.SHA256)(JSON.stringify(`${this.timestamp}${this.prevHash}${this.transactions}${this.stake}${this.blocksignature}`)).toString();
+        return (0, crypto_js_1.SHA256)(JSON.stringify(`${this.timestamp}${this.prevHash}${this.transactions}${this.stake}`)).toString();
     }
     signBlockHash(hash, validatorWallet) {
         return validatorWallet.signHash(hash);
