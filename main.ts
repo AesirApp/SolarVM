@@ -4,7 +4,6 @@ var node = new SolarNode(7521);
 node.server.init();
 var node2 = new SolarNode(7532);
 
-node2.server.CUR_ADDRESS = 'ws://localhost:7532'
 node2.server.PEERS.push("ws://localhost:7521");
 
 node2.server.init();

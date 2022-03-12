@@ -1,5 +1,4 @@
 import { WebSocket, WebSocketServer } from "ws";
-import { SolarTransaction } from "../../vm/models/wallet/Transaction";
 import { SolarBroadcast, SOLARBROADCAST_TYPE } from "../client/Broadcast";
 import { SolarNode } from "../Node";
 
@@ -21,6 +20,7 @@ export class SolarServer{
     constructor(node:SolarNode,curport:number){
         this.node = node;
         this.CUR_PORT = curport;
+        this.CUR_ADDRESS = "ws://localhost:" + curport.toString();
         this.server = new WebSocketServer({"port":this.CUR_PORT});
         this.PEERS = [];
     }
