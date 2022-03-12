@@ -1,0 +1,15 @@
+{
+  "name": "solarvm",
+  "version": "1.0.0",
+  "description": "An easily upgradeable and scaleable proof of stake crypto currency with a built in way to create information driven smart contracts and built in trading functionality. Made for Aesir.",
+  "main": "./build/main.js",
+  "scripts": {
+    "test": "node ./build/main.js"
+  },
+  "keywords": [
+    "vm",
+    "language"
+  ],
+  "author": "Aesir",
+  "license": "ISC"
+}
