@@ -1,4 +1,8 @@
-### Solar - The information driven cryptocurrency
+
+
+# Solar - The information driven cryptocurrency
+
+## **NOTE** This cryptocurrency is still under heavy development, and is only working as an alpha and probably won't be finalized for a while.
 
 #### An easily upgradeable and scaleable proof of stake crypto currency with a built in way to create information driven smart contracts. Made for Aesir.
 

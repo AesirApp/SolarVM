@@ -30,19 +30,37 @@ export class SolarServer{
             socket.on('message', message =>{
                 var broadcast :SolarBroadcast = JSON.parse(message.toString());
 
-                switch(broadcast.TYPE){
-                    case SOLARBROADCAST_TYPE.HANDSHAKE:
-                        var curnodes = broadcast.payload;
+                console.log(broadcast)
 
-                        curnodes.forEach((node:string) => this.connectHandshake(node));
-                        console.log("initalized",this.CUR_ADDRESS);
-                    case SOLARBROADCAST_TYPE.TRANSACTION:
-                        this.node.pool.addTransactionToPool(broadcast.payload);
+                if(broadcast.TYPE == SOLARBROADCAST_TYPE.HANDSHAKE){
+                    var curnodes = broadcast.payload;
 
-                    case SOLARBROADCAST_TYPE.BLOCKPROPOSE:
+                    curnodes.forEach((node:string) => this.connectHandshake(node));
+                }else if(broadcast.TYPE == SOLARBROADCAST_TYPE.TRANSACTION){
+                    console.log("transaction")
+                    this.node.pool.addTransactionToPool(broadcast.payload);
+                }else if(broadcast.TYPE == SOLARBROADCAST_TYPE.BLOCKPROPOSE){
 
+                }else if(broadcast.TYPE == SOLARBROADCAST_TYPE.GETPROPOSER){
 
+                }else if(broadcast.TYPE == SOLARBROADCAST_TYPE.ADDSTAKE){
+
+                }else if(broadcast.TYPE == SOLARBROADCAST_TYPE.REMOVESTAKE){
+                    
                 }
+
+                //switch(broadcast.TYPE){
+                //    case SOLARBROADCAST_TYPE.HANDSHAKE:
+//
+                //        //console.log("initalized",this.CUR_ADDRESS);
+                //    case SOLARBROADCAST_TYPE.TRANSACTION:
+                //        console.log("transaction")
+                //        this.node.pool.addTransactionToPool(broadcast.payload);
+//
+                //    case SOLARBROADCAST_TYPE.BLOCKPROPOSE:
+//
+//
+                //}
             });
         });
 

@@ -8,6 +8,14 @@ node2.server.PEERS.push("ws://localhost:7521");
 
 node2.server.init();
 
+setTimeout(() =>{
+    var node3 = new SolarNode(8532);
+
+    node3.server.PEERS.push("ws://localhost:7521")
+    node3.server.init()
+},10000)
+
+
 
 
 //console.log(blockchain.chain)

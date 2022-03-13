@@ -21,6 +21,10 @@ export class SolarValidatorWallet extends SolarWallet{
         this.stakes.push({"address":this.keypair.getPublic('hex'),"age":Date.now(),"hydrogen":amount});
     }
 
+    public removeStake(){
+        
+    }
+
     public getBalance(blockchain: SolarBlockchain): number {
         var blockbalance = super.getBalance(blockchain);
 

@@ -52,7 +52,7 @@ export class SolarNode{
     }
 
     public scheduleValidation(){
-        cron.schedule('30 * * * *', (now) =>{
+        cron.schedule('5 * * * *', (now) =>{
             var validAddress = this.blockchain.validator.chooseValidator(this.blockchain.getLatestBlock().prevHash);
             this.curvalidator = validAddress;
             for(var i = 0; i < this.localValidatorWallets.length;i++){
