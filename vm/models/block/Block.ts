@@ -13,14 +13,27 @@ export class SolarBlock{
     public blocksignature:string;
     public stake:SolarStake[];
 
-    constructor(prevHash:string,timestamp:number,transactions:SolarTransaction[],validatorWallet:SolarValidatorWallet,stake:SolarStake[]){
+    constructor(prevHash:string,timestamp:number,transactions:SolarTransaction[],validatorWallet:SolarValidatorWallet | string,stake:SolarStake[],blocksignature?:string){
         this.prevHash = prevHash;
         this.timestamp = timestamp;
         this.stake = stake;
 
-        this.validator = validatorWallet.getPublicKey;
+        
         this.hash = this.CreateHash();
-        this.blocksignature = this.signBlockHash(this.hash,validatorWallet);
+        if(validatorWallet instanceof SolarValidatorWallet && blocksignature == undefined){
+            this.validator = validatorWallet.getPublicKey;
+
+            this.blocksignature = this.signBlockHash(this.hash,validatorWallet);
+    
+        }else if(blocksignature != undefined && !(validatorWallet instanceof SolarValidatorWallet)){
+            this.validator = validatorWallet;
+            this.blocksignature = blocksignature;
+        }else{
+            this.validator = '';
+            this.blocksignature = '';
+        }
+
+
 
         this.transactions = transactions;
     }

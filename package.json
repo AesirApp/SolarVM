@@ -1,11 +1,12 @@
 {
   "name": "solarvm",
   "version": "1.0.0",
-  "description": "An easily upgradeable and scaleable proof of stake crypto currency with a built in way to create information driven smart contracts and built in trading functionality. Made for Aesir.",
+  "description": "A decenteralized computing platform with a built-in cryptocurrency. Made for Aesir.",
   "main": "./build/main.js",
   "scripts": {
     "start": "npm run node",
-    "node": "npx tsc && node ./build/main.js"
+    "node": "npx tsc && node ./build/main.js",
+    "tunnel": ""
   },
   "keywords": [
     "vm",
@@ -17,6 +18,8 @@
     "crypto-js": "^4.1.1",
     "elliptic": "^6.5.4",
     "ip": "^1.1.5",
+    "ipaddr.js": "^2.0.1",
+    "ngrok": "^4.3.1",
     "node-cron": "^3.0.0",
     "random-seed": "^0.3.0",
     "ws": "^8.5.0"

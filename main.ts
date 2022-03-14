@@ -1,22 +1,17 @@
 import { SolarNode } from "./node/Node";
-
-var node = new SolarNode(7521);
-node.server.init();
-var node2 = new SolarNode(7532);
-
-node2.server.PEERS.push("ws://localhost:7521");
-
-node2.server.init();
-
-setTimeout(() =>{
-    var node3 = new SolarNode(8532);
-
-    node3.server.PEERS.push("ws://localhost:7521")
-    node3.server.init()
-},10000)
+//var natapi = require('nat-api');
+import ip from 'ip';
 
 
+var node = new SolarNode("local",["ws://192.168.1.14:7521"],7521);
+node.wsserver.init();
 
+//const client = new natapi();
+//client.map(7521,function(err:any){
+//    if(err) return console.log(err);
+//
+//    console.log("working")
+//})
 
-//console.log(blockchain.chain)
-//var tempwallet2 = new SolarWallet();
+//var node2 = new SolarNode("local",["ws://192.168.1.14:7521"],7522);
+//node2.wsserver.init();

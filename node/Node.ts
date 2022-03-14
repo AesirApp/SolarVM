@@ -4,12 +4,14 @@ import { SolarTransaction } from "../vm/models/wallet/Transaction";
 import { SolarTransactionPool } from "../vm/models/wallet/TransactionPool";
 import { SolarWallet } from "../vm/models/wallet/Wallet";
 import { SOLARBROADCAST_TYPE } from "./client/Broadcast";
-import { SolarServer } from "./server/Server";
+import { SolarWsServer } from "./server/WsServer";
 import cron from 'node-cron';
 import { SolarBlock } from "../vm/models/block/Block";
 
 export class SolarNode{
-    public server: SolarServer;
+    public NODE_VERSION:string = "JS-SolarV0.0.1-build0"
+
+    public wsserver: SolarWsServer;
     public blockchain:SolarBlockchain;
     public pool:SolarTransactionPool;
 
@@ -17,16 +19,21 @@ export class SolarNode{
     public localValidatorWallets:SolarValidatorWallet[];
     public curvalidator:string = "";
 
-    constructor(curport:number){
+    constructor(nodeType:string,nodeBootPeers:any[],curport?:number){
         this.blockchain = new SolarBlockchain();
-
-        this.server = new SolarServer(this,curport);
+        if(curport){
+            this.wsserver = new SolarWsServer(this,curport,nodeType,nodeBootPeers);
+        }else{
+            this.wsserver = new SolarWsServer(this,75215,nodeType,nodeBootPeers);
+        }
+        
         //this.server.init();
 
         this.pool = new SolarTransactionPool([]);
 
         this.localWallets = [];
         this.localValidatorWallets = [];
+        this.scheduleValidation();
     }
 
     public initNodeConnections(){
@@ -38,16 +45,16 @@ export class SolarNode{
     }
 
     public requestChainBroadcast(){
-        this.server.createBroadcast({"TYPE":SOLARBROADCAST_TYPE.REQUESTCHAIN,"payload":this.blockchain});
+        this.wsserver.createBroadcast({"TYPE":SOLARBROADCAST_TYPE.REQUESTCHAIN,"payload":this.blockchain});
     }
 
     public addTransactionToPools(transaction:SolarTransaction){
         this.pool.addTransactionToPool(transaction);
-        this.server.createBroadcast({"TYPE":SOLARBROADCAST_TYPE.TRANSACTION,"payload":transaction});
+        this.wsserver.createBroadcast({"TYPE":SOLARBROADCAST_TYPE.TRANSACTION,"payload":transaction});
     }
 
     public addProposedBlock(block:SolarBlock | undefined){
-        this.server.createBroadcast({"TYPE":SOLARBROADCAST_TYPE.BLOCKPROPOSE,"payload":block});
+        this.wsserver.createBroadcast({"TYPE":SOLARBROADCAST_TYPE.BLOCKPROPOSE,"payload":block});
         this.blockchain.addBlock(block as SolarBlock);
     }
 
